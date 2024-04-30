@@ -1,6 +1,8 @@
 import pygame, os, random
 import numpy as np
 from board_game_map import *
+from board_map import *
+from player import Player
 BLACK = (0,0,0)
 
 FPS = 60
@@ -12,13 +14,16 @@ win = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("board Game")
 clock = pygame.time.Clock()
 run = True
+offset = pygame.math.Vector2(0,0)
+gloabal_offset = pygame.math.Vector2(0,0)
+maps = BoardMap()
 
-def draw_window(win, board_grup):
+def draw_window(win, board_grup, player):
     win.fill(BLACK)
     board_grup.draw(win)
+    # player.draw(win)
+    win.blit(player.image, player.rect)
     pygame.display.update()
-
-print(board_map)
 
 board_wall = pygame.sprite.Group()
 col, row = board_map.shape
@@ -29,22 +34,29 @@ for r in range(row):
 
 print(board_wall)
 
+player = Player(WIDTH-40,45)
+player_g = pygame.sprite.Group()
+player_g.add(player)
 while run:
     clock.tick(FPS)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                # current_cursor_pos = pygame.mouse.get_pos() - gloabal_offset
+                current_cursor_pos = pygame.mouse.get_pos()
+                maps.get_element_from_table(pygame.math.Vector2(current_cursor_pos))
+                player.move(pygame.math.Vector2(current_cursor_pos) )
+            if event.button == 3:
+                print("kilknięto prawy przycisk myszy")
 
-        keyPressed = pygame.key.get_pressed()
-    if keyPressed[pygame.K_w]:
-        board_wall.update(0,1)
-    if keyPressed[pygame.K_s]:
-        board_wall.update(0,-1)
-    if keyPressed[pygame.K_d]:
-        board_wall.update(-1,0)
-    if keyPressed[pygame.K_a]:
-        board_wall.update(1,0)
+    offset = maps.determine_offset(pygame.mouse.get_pos(), WIDTH, HEIGHT)
+    gloabal_offset += offset
+    
+    board_wall.update(offset)
+    player.update(offset)
 
-    draw_window(win, board_wall)
+    draw_window(win, board_wall, player)
 
 pygame.quit()
