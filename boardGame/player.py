@@ -1,6 +1,7 @@
 from typing import Any
 import pygame, math
 from pygame.math import Vector2
+from board_map import board_map
 
 class Player(pygame.sprite.Sprite):
 
@@ -12,9 +13,13 @@ class Player(pygame.sprite.Sprite):
         self.pose = pygame.math.Vector2(x,y)
         self.rect.center = self.pose
         self.dest_pos = pygame.math.Vector2(x,y)
+        self.global_offset = pygame.math.Vector2(0,0)
 
     def update(self, offset) -> None:
-        self.pose += offset
+        self.pose += self.move_to()
+        if offset.x != 0 or offset.y != 0:
+            self.pose += offset
+            self.dest_pos += offset
         self.rect.center = self.pose
 
     def move_to(self):
@@ -28,8 +33,17 @@ class Player(pygame.sprite.Sprite):
             return Vector2(dx * speed, dy * speed)
         return Vector2(0,0)
     
-    def move(self, pose):
-        self.dest_pos = pygame.math.Vector2(pose)
-        print("nowa pozycja do przejścia {}".format(self.dest_pos))
-        print("aktualna pozycja {} ".format(self.rect.center))
+    def move(self, row, coll):
+        # określenie pozycji pod względem kolumny i wiersza z mapy 
+        if board_map[row, coll] == 2:
+            print("umieszczam naszego gracza ")
+            self.dest_pos.x = coll * 30 + 15
+            self.dest_pos.y = row * 30 + 15
+            self.dest_pos += self.global_offset
+        else:
+            print("nie dozowlone miejsce")
+
+        # self.dest_pos = pygame.math.Vector2(pose)
+        # print("nowa pozycja do przejścia {}".format(self.dest_pos))
+        # print("aktualna pozycja {} ".format(self.rect.center))
 

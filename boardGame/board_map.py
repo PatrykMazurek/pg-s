@@ -48,3 +48,10 @@ class BoardMap:
     def get_element_from_table(self, pos):
         temp_x = int(pos.x /30)
         temp_y = int(pos.y /30)
+        size = board_map.shape * 30
+        if pos.x > -1 and pos.y > -1:
+            print(" {} {} {} ".format(temp_y, temp_x, board_map[temp_y,temp_x]))
+            return temp_y, temp_x, board_map[temp_y,temp_x]
+        else:
+            print(" poza obszarem")
+            return None
