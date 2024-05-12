@@ -6,9 +6,7 @@ from player import Player
 from enemy import Enemy
 
 BLACK = (0,0,0)
-
 FPS = 60
-
 WIDTH, HEIGHT = 800, 650
 
 pygame.display.init()
@@ -38,8 +36,8 @@ player_g = pygame.sprite.Group()
 player_g.add(player)
 
 all_enemies = pygame.sprite.Group()
-# for _ in range(5):
-#     all_enemies.add(Enemy(player))
+all_enemies.add(Enemy(player, 4,5))
+all_enemies.add(Enemy(player, 9,9))
 
 while run:
     clock.tick(FPS)
@@ -58,7 +56,7 @@ while run:
     player.global_offset += offset
     board_wall.update(offset)
     player.update(offset)
-    all_enemies.update()
+    all_enemies.update(offset)
     draw_window(win, board_wall, player, all_enemies)
 
 pygame.quit()
