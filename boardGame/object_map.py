@@ -24,6 +24,10 @@ class ObjectMap(pygame.sprite.Sprite):
         self.pos = Vector2(self.get_pos(row, cell))
         self.rect.center = self.pos
 
+    def update(self, offset) -> None:
+        self.rect.x += offset.x
+        self.rect.y += offset.y
+
     def get_pos(self, row, cell):
         temp_pos = pygame.math.Vector2([0,0])
         temp_pos.x = cell * 30 + 15

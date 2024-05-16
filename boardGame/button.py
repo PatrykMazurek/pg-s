@@ -18,10 +18,10 @@ class Button:
             if event.type == pygame.QUIT:
                 return None
             if event.type == pygame.MOUSEBUTTONDOWN:
-                print("kliknieto w myszkę")
-                print("{} {}".format(self.rect.topleft, self.rect.bottomright))
-                print(pygame.mouse.get_pos())
+                # print("kliknieto w myszkę")
+                # print("{} {}".format(self.rect.topleft, self.rect.bottomright))
+                # print(pygame.mouse.get_pos())
                 if self.rect.collidepoint(pygame.mouse.get_pos()):
-                    print("kliknieto w przycisk")
+                    # print("kliknieto w przycisk")
                     return True
         return False

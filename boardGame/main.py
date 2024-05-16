@@ -4,6 +4,7 @@ from board_game_map import *
 from board_map import *
 from player import Player
 from enemy import Enemy
+from object_map import ObjectMap
 
 BLACK = (0,0,0)
 FPS = 60
@@ -17,10 +18,11 @@ run = True
 offset = pygame.math.Vector2(0,0)
 maps = BoardMap()
 
-def draw_window(win, board_grup, player, enemy_group):
+def draw_window(win, board_grup, player, enemy_group, object_group):
     win.fill(BLACK)
     board_grup.draw(win)
     enemy_group.draw(win)
+    object_group.draw(win)
     win.blit(player.image, player.rect)
     pygame.display.update()
 
@@ -32,8 +34,12 @@ for r in range(row):
             board_wall.add(BoardTile(board_map[c,r], r, c))
 
 player = Player(45,45)
-player_g = pygame.sprite.Group()
-player_g.add(player)
+# player_g = pygame.sprite.Group()
+# player_g.add(player)
+all_object = pygame.sprite.Group()
+all_object.add(ObjectMap("coin", 4,5, player, None))
+all_object.add(ObjectMap("box", 6,5, player, 1))
+all_object.add(ObjectMap("task", 9,5, player, 1))
 
 all_enemies = pygame.sprite.Group()
 all_enemies.add(Enemy(player, 4,5))
@@ -57,6 +63,8 @@ while run:
     board_wall.update(offset)
     player.update(offset)
     all_enemies.update(offset)
-    draw_window(win, board_wall, player, all_enemies)
+    all_object.update(offset)
+
+    draw_window(win, board_wall, player, all_enemies, all_object)
 
 pygame.quit()
