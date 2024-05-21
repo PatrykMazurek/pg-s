@@ -29,8 +29,8 @@ class Enemy(pygame.sprite.Sprite):
 
     def set_position(self, row, cell):
         temp_pos = pygame.math.Vector2([0,0])
-        temp_pos.x = cell * 30 + 15
-        temp_pos.y = row * 30 + 15
+        temp_pos.x = cell * 32 + 16
+        temp_pos.y = row * 32 + 16
         temp_pos += self.player.global_offset
         return temp_pos
 

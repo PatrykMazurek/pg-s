@@ -46,9 +46,9 @@ class BoardMap:
         return Vector2(0,0)
     
     def get_element_from_table(self, pos):
-        temp_x = int(pos.x /30)
-        temp_y = int(pos.y /30)
-        size = board_map.shape * 30
+        temp_x = int(pos.x /32)
+        temp_y = int(pos.y /32)
+        size = board_map.shape * 32
         if pos.x > -1 and pos.y > -1:
             print(" {} {} {} ".format(temp_y, temp_x, board_map[temp_y,temp_x]))
             return temp_y, temp_x, board_map[temp_y,temp_x]

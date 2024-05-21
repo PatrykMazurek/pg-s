@@ -61,8 +61,8 @@ class Player(pygame.sprite.Sprite):
 
     def get_pos_from_map(self, row, coll):
         print("wskazuje kolejną pozycję do przejścia")
-        self.dest_pos.x = coll * 30 + 15
-        self.dest_pos.y = row * 30 + 15
+        self.dest_pos.x = coll * 32 + 16
+        self.dest_pos.y = row * 32 + 16
         self.dest_pos += self.global_offset
 
     # algorytmy do poszukiwania drogi 
